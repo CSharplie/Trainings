@@ -1,0 +1,3 @@
+AzureDevops-CICD-SQL/.terraform.*
+AzureDevops-CICD-SQL/.terraform/*
+AzureDevops-CICD-SQL/terraform.tfstate
