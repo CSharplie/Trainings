@@ -64,7 +64,7 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: production
+    environment: development
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -93,7 +93,7 @@ jobs:
         export ARM_SUBSCRIPTION_ID="e4b1e845-6055-48ca-a385-b3491f5772fd"
         export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
         
-        terraform plan
+        terraform plan -var="environment=dev"
         
 
       # On push to main, build or change infrastructure according to Terraform configuration files
