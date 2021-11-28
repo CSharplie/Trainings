@@ -51,7 +51,13 @@ on:
     - main
     paths:
     - 'AzureDevops-CICD-SQL/**'
+    - '.github/workflows/terraform.yml'
   pull_request:
+    branches:
+    - main
+    paths:
+    - 'AzureDevops-CICD-SQL/**'
+    - '.github/workflows/terraform.yml'
   workflow_call:
 
 jobs:
