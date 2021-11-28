@@ -77,21 +77,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Set Client ID
-      run: export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_SECRET }}"
-    
-    - name: Set Client Secret
-      run: export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
-   
-    - name: Set Subscription ID
-      run: export ARM_SUBSCRIPTION_ID="e4b1e845-6055-48ca-a385-b3491f5772fd"
-    
-    - name: Set Tenant ID
-      run: export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
-      
-    - name: Test Tenant ID
-      run: echo $ARM_TENANT_ID
-
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
@@ -102,7 +87,14 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan
+      run: |
+        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_SECRET }}"
+        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
+        export ARM_SUBSCRIPTION_ID="e4b1e845-6055-48ca-a385-b3491f5772fd"
+        export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
+        
+        terraform plan
+        
 
       # On push to main, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
