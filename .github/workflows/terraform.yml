@@ -71,11 +71,23 @@ jobs:
       run:
         shell: bash
         working-directory: AzureDevops-CICD-SQL
-
+      
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
+
+    - name: Set Client ID
+      run: export ARM_CLIENT_ID="${{ secrets.AZURE_CREDENTIALS.clientId }}"
+    
+    - name: Set Client Secret
+      run: export ARM_CLIENT_SECRET="${{ secrets.AZURE_CREDENTIALS.clientSecret }}"
+   
+    - name: Set Subscription ID
+      run: export ARM_SUBSCRIPTION_ID="${{ secrets.AZURE_CREDENTIALS.subscriptionId }}"
+    
+    - name: Set Tenant ID
+      run: export ARM_TENANT_ID="${{ secrets.AZURE_CREDENTIALS.tenantId }}"
 
     # Login to azure with secret credentials
     - name: Azure login
