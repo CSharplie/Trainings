@@ -52,6 +52,7 @@ on:
     paths:
     - 'AzureDevops-CICD-SQL/**'
   pull_request:
+  workflow_call:
 
 jobs:
   terraform:
