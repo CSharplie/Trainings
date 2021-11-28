@@ -88,6 +88,9 @@ jobs:
     
     - name: Set Tenant ID
       run: export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
+      
+    - name: Test Tenant ID
+      run: echo $ARM_TENANT_ID
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
