@@ -51,8 +51,6 @@ on:
     - main
     paths:
     - 'AzureDevops-CICD-SQL/**'
-    paths-ignore:
-    - 'AzureDevops-CICD-SQL/.vscode/**'
   pull_request:
 
 jobs:
