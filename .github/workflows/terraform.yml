@@ -44,10 +44,15 @@
 
 name: 'Terraform'
 
+# Push trigger
 on:
   push:
     branches:
     - main
+    paths:
+    - 'AzureDevops-CICD-SQL/**'
+    paths-ignore:
+    - 'AzureDevops-CICD-SQL/.vscode/**'
   pull_request:
 
 jobs:
@@ -60,6 +65,7 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: AzureDevops-CICD-SQL
 
     steps:
     # Checkout the repository to the GitHub Actions runner
