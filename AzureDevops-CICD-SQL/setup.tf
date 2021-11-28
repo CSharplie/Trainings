@@ -1,5 +1,12 @@
 
+variable "environment" {
+  default = "dev"
+}
+
 terraform {
+  backend "azurerm" {
+  }
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -23,15 +30,8 @@ resource "azurerm_resource_group" "rg" {
 module "server_dev" {
   source         = "./modules/server"
   resource_group = azurerm_resource_group.rg
-  environment    = "dev"
+  environment    = var.environment
   password       = "pzcRYVqm*s9ZYVrGuPXHZuPE"
-}
-
-module "server_prd" {
-  source         = "./modules/server"
-  resource_group = azurerm_resource_group.rg
-  environment    = "dev"
-  password       = "mF@DdWxaa#3^Gzk*%BCGfU8g"
 }
 
 
