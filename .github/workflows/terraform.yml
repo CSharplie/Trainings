@@ -88,7 +88,7 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: |
-        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_SECRET }}"
+        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
         export ARM_SUBSCRIPTION_ID="e4b1e845-6055-48ca-a385-b3491f5772fd"
         export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
