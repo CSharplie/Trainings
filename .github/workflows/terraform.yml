@@ -58,7 +58,7 @@ on:
     paths:
     - 'AzureDevops-CICD-SQL/**'
     - '.github/workflows/terraform.yml'
-  workflow_call:
+  workflow_dispatch:
 
 jobs:
   deploy-development:
