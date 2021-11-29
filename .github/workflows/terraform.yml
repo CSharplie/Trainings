@@ -92,7 +92,7 @@ jobs:
         terraform init -backend-config="configuration/backend.dev.conf"
         terraform plan -var="environment=dev"
 
-deploy-production:
+  deploy-production:
     name: 'production'
     runs-on: ubuntu-latest
     environment: production
