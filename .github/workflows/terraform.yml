@@ -61,8 +61,8 @@ on:
   workflow_call:
 
 jobs:
-  terraform:
-    name: 'Terraform'
+  deploy-development:
+    name: 'development'
     runs-on: ubuntu-latest
     environment: development
 
@@ -77,6 +77,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: |
@@ -84,26 +88,40 @@ jobs:
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
         export ARM_SUBSCRIPTION_ID="e4b1e845-6055-48ca-a385-b3491f5772fd"
         export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
-        
+
         terraform init -backend-config="configuration/backend.dev.conf"
+        terraform plan -var="environment=dev"
+
+deploy-production:
+    name: 'production'
+    runs-on: ubuntu-latest
+    environment: production
+    needs: [deploy-development]
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: AzureDevops-CICD-SQL
+      
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check -recursive
 
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform deployment
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
         export ARM_SUBSCRIPTION_ID="e4b1e845-6055-48ca-a385-b3491f5772fd"
         export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
-        
-        terraform plan -var="environment=dev"
-        
 
-      # On push to main, build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-      #- name: Terraform Apply
-      #  if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #  run: terraform apply -auto-approve
+        terraform init -backend-config="configuration/backend.prd.conf"
+        terraform plan -var="environment=prd"
+
+    #  run: terraform apply -auto-approve
