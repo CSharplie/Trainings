@@ -82,7 +82,7 @@ jobs:
       run: terraform fmt -check -recursive
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
+    - name: Terraform deployment
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
@@ -90,7 +90,7 @@ jobs:
         export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
 
         terraform init -backend-config="configuration/backend.dev.conf"
-        terraform plan -var="environment=dev"
+        terraform plan -var="environment=dev" -var="password="${{ secrets.AZURE_DB_PASSWORD_DEV }}"
 
   deploy-production:
     name: 'production'
@@ -122,6 +122,6 @@ jobs:
         export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
 
         terraform init -backend-config="configuration/backend.prd.conf"
-        terraform plan -var="environment=prd"
+        terraform plan -var="environment=prd" -var="password="${{ secrets.AZURE_DB_PASSWORD_PRD }}"
 
     #  run: terraform apply -auto-approve
