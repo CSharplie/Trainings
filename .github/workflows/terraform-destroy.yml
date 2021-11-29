@@ -1,0 +1,67 @@
+name: 'Terraform-Destroy'
+
+# Push trigger
+on:
+  workflow_dispatch:
+
+jobs:
+  destroy-development:
+    name: 'development'
+    runs-on: ubuntu-latest
+    environment: development
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+      
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform detroy
+      run: |
+        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
+        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
+        export ARM_SUBSCRIPTION_ID="e4b1e845-6055-48ca-a385-b3491f5772fd"
+        export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
+
+        terraform init -backend-config="configuration/backend.dev.conf"
+        terraform destroy -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD_DEV }}" -auto-approve
+
+  destroy-production:
+    name: 'production'
+    runs-on: ubuntu-latest
+    environment: production
+    needs: [destroy-development]
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+      
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform detroy
+      run: |
+        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
+        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
+        export ARM_SUBSCRIPTION_ID="e4b1e845-6055-48ca-a385-b3491f5772fd"
+        export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
+
+        terraform init -backend-config="configuration/backend.prd.conf"
+        terraform destroy -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD_PRD }}" -auto-approve
