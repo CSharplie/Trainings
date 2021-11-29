@@ -7,7 +7,6 @@ on:
     - main
     paths:
     - '**/*.tf'
-    - '.github/workflows/terraform.yml'
   workflow_dispatch:
 
 jobs:
