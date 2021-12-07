@@ -27,7 +27,7 @@ module "database_02" {
   server         = azurerm_sql_server.server
 }
   
-  module "database_03" {
+module "database_03" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
