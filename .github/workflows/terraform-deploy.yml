@@ -38,7 +38,7 @@ jobs:
         export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
 
         terraform init -backend-config="configuration/backend.dev.conf"
-        terraform plan -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD_DEV }}"
+        terraform apply -auto-approve -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD_DEV }}"
 
   deploy-production:
     name: 'production'
