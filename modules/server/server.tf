@@ -15,7 +15,7 @@ module "database_01" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "01"
+  suffix         = "CCO"
   server         = azurerm_sql_server.server
 }
 
@@ -23,7 +23,7 @@ module "database_02" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "02"
+  suffix         = "LBO"
   server         = azurerm_sql_server.server
 }
 
@@ -31,6 +31,62 @@ module "database_03" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "03"
+  suffix         = "ARO"
+  server         = azurerm_sql_server.server
+}
+
+module "database_04" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "EAU"
+  server         = azurerm_sql_server.server
+}
+
+module "database_05" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "HAM"
+  server         = azurerm_sql_server.server
+}
+
+module "database_06" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "PBH"
+  server         = azurerm_sql_server.server
+}
+
+module "database_07" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "JPA"
+  server         = azurerm_sql_server.server
+}
+
+module "database_08" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "WGA"
+  server         = azurerm_sql_server.server
+}
+
+module "database_07" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "RGL"
+  server         = azurerm_sql_server.server
+}
+
+module "database_07" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "XAL"
   server         = azurerm_sql_server.server
 }
