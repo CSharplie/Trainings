@@ -19,6 +19,14 @@ resource "azurerm_sql_firewall_rule" "db_fw_az" {
   end_ip_address      = "0.0.0.0"
 }
 
+resource "azurerm_sql_firewall_rule" "db_fw_az" {
+  name                = "All IPs"
+  resource_group_name = var.resource_group.name
+  server_name         = azurerm_sql_server.server.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "255.255.255.255"
+}
+
 module "database_01" {
   source         = "../../modules/database"
   resource_group = var.resource_group
