@@ -19,7 +19,7 @@ resource "azurerm_sql_firewall_rule" "db_fw_az" {
   end_ip_address      = "0.0.0.0"
 }
 
-resource "azurerm_sql_firewall_rule" "db_fw_az" {
+resource "azurerm_sql_firewall_rule" "db_fw_all" {
   name                = "All IPs"
   resource_group_name = var.resource_group.name
   server_name         = azurerm_sql_server.server.name
