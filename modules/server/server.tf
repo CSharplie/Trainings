@@ -3,7 +3,7 @@ variable "environment" {}
 variable "password" {}
 
 resource "azurerm_sql_server" "server" {
-  name                         = "training-cicd-analytics-${var.environment}"
+  name                         = "training-cicd-analytics-v2-${var.environment}"
   resource_group_name          = var.resource_group.name
   location                     = var.resource_group.location
   version                      = "12.0"
