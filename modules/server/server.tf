@@ -11,6 +11,14 @@ resource "azurerm_sql_server" "server" {
   administrator_login_password = var.password
 }
 
+resource "azurerm_sql_firewall_rule" "db_fw_az" {
+  name                = "Azure Services"
+  resource_group_name = var.resource_group.name
+  server_name         = azurerm_sql_server.server.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "0.0.0.0"
+}
+
 module "database_01" {
   source         = "../../modules/database"
   resource_group = var.resource_group
