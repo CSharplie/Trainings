@@ -59,14 +59,6 @@ module "database_04" {
   server         = azurerm_sql_server.server
 }
 
-module "database_05" {
-  source         = "../../modules/database"
-  resource_group = var.resource_group
-  environment    = var.environment
-  suffix         = "HAM"
-  server         = azurerm_sql_server.server
-}
-
 module "database_06" {
   source         = "../../modules/database"
   resource_group = var.resource_group
