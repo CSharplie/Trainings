@@ -83,3 +83,11 @@ module "database_09" {
   server         = azurerm_sql_server.server
 }
 
+module "database_10" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "PNL"
+  server         = azurerm_sql_server.server
+}
+
