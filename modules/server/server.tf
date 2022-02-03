@@ -83,10 +83,3 @@ module "database_09" {
   server         = azurerm_sql_server.server
 }
 
-module "database_10" {
-  source         = "../../modules/database"
-  resource_group = var.resource_group
-  environment    = var.environment
-  suffix         = "XAL"
-  server         = azurerm_sql_server.server
-}
