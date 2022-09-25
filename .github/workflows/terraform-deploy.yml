@@ -34,8 +34,8 @@ jobs:
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
-        export ARM_SUBSCRIPTION_ID="e4b1e845-6055-48ca-a385-b3491f5772fd"
-        export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
+        export ARM_SUBSCRIPTION_ID="166adf1d-3776-4c73-b613-fa3f4a29f0a8"
+        export ARM_TENANT_ID="806f47be-2b6d-4478-9283-7f354e840d82"
 
         terraform init -backend-config="configuration/backend.dev.conf"
         terraform apply -auto-approve -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD_DEV }}"
@@ -65,8 +65,8 @@ jobs:
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
-        export ARM_SUBSCRIPTION_ID="e4b1e845-6055-48ca-a385-b3491f5772fd"
-        export ARM_TENANT_ID="ba6b2e3c-7421-4e93-b60e-d3f39eee52d5"
+        export ARM_SUBSCRIPTION_ID="166adf1d-3776-4c73-b613-fa3f4a29f0a8"
+        export ARM_TENANT_ID="806f47be-2b6d-4478-9283-7f354e840d82"
 
         terraform init -backend-config="configuration/backend.prd.conf"
         terraform apply -auto-approve -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD_PRD }}"
