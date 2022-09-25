@@ -27,11 +27,19 @@ resource "azurerm_sql_firewall_rule" "db_fw_all" {
   end_ip_address      = "255.255.255.255"
 }
 
+module "database_01" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "CCO"
+  server         = azurerm_sql_server.server
+}
+
 module "database_02" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "LBO"
+  suffix         = "HBE"
   server         = azurerm_sql_server.server
 }
 
@@ -39,7 +47,7 @@ module "database_03" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "ARO"
+  suffix         = "RBR"
   server         = azurerm_sql_server.server
 }
 
@@ -47,7 +55,7 @@ module "database_04" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "EAU"
+  suffix         = "MBE"
   server         = azurerm_sql_server.server
 }
 
@@ -55,7 +63,7 @@ module "database_06" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "PBH"
+  suffix         = "YEL"
   server         = azurerm_sql_server.server
 }
 
@@ -63,7 +71,7 @@ module "database_07" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "JPA"
+  suffix         = "WHO"
   server         = azurerm_sql_server.server
 }
 
@@ -71,7 +79,7 @@ module "database_08" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "WGA"
+  suffix         = "JMO"
   server         = azurerm_sql_server.server
 }
 
@@ -79,15 +87,6 @@ module "database_09" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "RGL"
+  suffix         = "RPL"
   server         = azurerm_sql_server.server
 }
-
-module "database_10" {
-  source         = "../../modules/database"
-  resource_group = var.resource_group
-  environment    = var.environment
-  suffix         = "PNL"
-  server         = azurerm_sql_server.server
-}
-
