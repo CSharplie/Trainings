@@ -90,7 +90,7 @@ module "database_09" {
   suffix         = "RPL"
   server         = azurerm_sql_server.server
 }
-  
+
 module "database_10" {
   source         = "../../modules/database"
   resource_group = var.resource_group
