@@ -27,7 +27,7 @@ resource "azurerm_sql_firewall_rule" "db_fw_all" {
   end_ip_address      = "255.255.255.255"
 }
 
-module "database_01" {
+module "database_00" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
@@ -35,23 +35,7 @@ module "database_01" {
   server         = azurerm_sql_server.server
 }
 
-module "database_02" {
-  source         = "../../modules/database"
-  resource_group = var.resource_group
-  environment    = var.environment
-  suffix         = "HBE"
-  server         = azurerm_sql_server.server
-}
-
-module "database_03" {
-  source         = "../../modules/database"
-  resource_group = var.resource_group
-  environment    = var.environment
-  suffix         = "RBR"
-  server         = azurerm_sql_server.server
-}
-
-module "database_04" {
+module "database_01" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
@@ -59,11 +43,43 @@ module "database_04" {
   server         = azurerm_sql_server.server
 }
 
+module "database_02" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "SCI"
+  server         = azurerm_sql_server.server
+}
+
+module "database_03" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "ADH"
+  server         = azurerm_sql_server.server
+}
+
+module "database_04" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "AHA"
+  server         = azurerm_sql_server.server
+}
+
+module "database_05" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "NGR"
+  server         = azurerm_sql_server.server
+}
+
 module "database_06" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "YEL"
+  suffix         = "NGE"
   server         = azurerm_sql_server.server
 }
 
@@ -71,7 +87,7 @@ module "database_07" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "WHO"
+  suffix         = "YKA"
   server         = azurerm_sql_server.server
 }
 
@@ -79,15 +95,15 @@ module "database_08" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "JMO"
+  suffix         = "AKH"
   server         = azurerm_sql_server.server
 }
-
+  
 module "database_09" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "RPL"
+  suffix         = "BLY"
   server         = azurerm_sql_server.server
 }
 
@@ -95,6 +111,30 @@ module "database_10" {
   source         = "../../modules/database"
   resource_group = var.resource_group
   environment    = var.environment
-  suffix         = "PNL"
+  suffix         = "AMO"
+  server         = azurerm_sql_server.server
+}
+  
+module "database_11" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "YPO"
+  server         = azurerm_sql_server.server
+}
+  
+module "database_12" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "TTI"
+  server         = azurerm_sql_server.server
+}
+  
+module "database_13" {
+  source         = "../../modules/database"
+  resource_group = var.resource_group
+  environment    = var.environment
+  suffix         = "ARO"
   server         = azurerm_sql_server.server
 }
