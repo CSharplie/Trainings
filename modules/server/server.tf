@@ -98,7 +98,7 @@ module "database_08" {
   suffix         = "AKH"
   server         = azurerm_sql_server.server
 }
-  
+
 module "database_09" {
   source         = "../../modules/database"
   resource_group = var.resource_group
@@ -114,7 +114,7 @@ module "database_10" {
   suffix         = "AMO"
   server         = azurerm_sql_server.server
 }
-  
+
 module "database_11" {
   source         = "../../modules/database"
   resource_group = var.resource_group
