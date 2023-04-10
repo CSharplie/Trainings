@@ -122,7 +122,7 @@ module "database_11" {
   suffix         = "YPO"
   server         = azurerm_sql_server.server
 }
-  
+
 module "database_12" {
   source         = "../../modules/database"
   resource_group = var.resource_group
@@ -130,7 +130,7 @@ module "database_12" {
   suffix         = "TTI"
   server         = azurerm_sql_server.server
 }
-  
+
 module "database_13" {
   source         = "../../modules/database"
   resource_group = var.resource_group
