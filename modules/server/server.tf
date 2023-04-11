@@ -27,14 +27,6 @@ resource "azurerm_sql_firewall_rule" "db_fw_all" {
   end_ip_address      = "255.255.255.255"
 }
 
-module "database_00" {
-  source         = "../../modules/database"
-  resource_group = var.resource_group
-  environment    = var.environment
-  suffix         = "CCO"
-  server         = azurerm_sql_server.server
-}
-
 module "database_01" {
   source         = "../../modules/database"
   resource_group = var.resource_group
