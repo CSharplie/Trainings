@@ -3,6 +3,9 @@ name: 'CICD with MSSQL - Destroy'
 on:
   workflow_dispatch:
 
+env:
+  WORKING_DIRECTORY: ./CICD with MSSQL/Azure
+
 jobs:
   destroy-dev:
     name: 'DEV'
@@ -17,6 +20,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
     - name: Terraform detroy
+      working-directory: ${{ env.WORKING_DIRECTORY }}
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
@@ -33,13 +37,13 @@ jobs:
     defaults:
       run:
         shell: bash
-      
     steps:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Terraform Format
       run: terraform fmt -check -recursive
     - name: Terraform detroy
+      working-directory: ${{ env.WORKING_DIRECTORY }}
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
@@ -62,6 +66,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
     - name: Terraform detroy
+      working-directory: ${{ env.WORKING_DIRECTORY }}
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
