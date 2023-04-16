@@ -8,6 +8,9 @@ on:
     - 'CICD with MSSQL/Azure/**/*.tf'
   workflow_dispatch:
 
+env:
+  WORKING_DIRECTORY: ./CICD with MSSQL/Azure
+
 jobs:
   deploy-dev:
     name: 'DEV'
@@ -22,7 +25,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
     - name: Terraform deployment
-      working-directory: ./CICD with MSSQL/Azure
+      working-directory: $WORKING_DIRECTORY
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
@@ -46,7 +49,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
     - name: Terraform deployment
-      working-directory: ./CICD with MSSQL/Azure
+      working-directory: $WORKING_DIRECTORY
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
@@ -70,7 +73,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
     - name: Terraform deployment
-      working-directory: ./CICD with MSSQL/Azure
+      working-directory: $WORKING_DIRECTORY
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
