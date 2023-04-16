@@ -10,10 +10,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-development:
-    name: 'development'
+  deploy-dev:
+    name: 'DEV'
     runs-on: ubuntu-latest
-    environment: development
+    environment: DEV
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -40,11 +40,42 @@ jobs:
         terraform init -backend-config="configuration/backend.dev.conf"
         terraform apply -auto-approve -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD_DEV }}"
 
-  deploy-production:
-    name: 'production'
+  deploy-uat:
+    name: 'UAT'
     runs-on: ubuntu-latest
-    environment: production
-    needs: [deploy-development]
+    environment: UAT
+    needs: [deploy-dev]
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+      
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform deployment
+      run: |
+        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
+        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
+        export ARM_SUBSCRIPTION_ID="166adf1d-3776-4c73-b613-fa3f4a29f0a8"
+        export ARM_TENANT_ID="806f47be-2b6d-4478-9283-7f354e840d82"
+
+        terraform init -backend-config="configuration/backend.uat.conf"
+        terraform apply -auto-approve -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD_PRD }}"
+
+  deploy-prd:
+    name: 'PRD'
+    runs-on: ubuntu-latest
+    environment: PRD
+    needs: [deploy-dev]
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:

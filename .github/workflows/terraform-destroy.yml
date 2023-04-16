@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  destroy-development:
-    name: 'development'
+  destroy-dev:
+    name: 'DEV'
     runs-on: ubuntu-latest
-    environment: development
+    environment: DEV
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -35,11 +35,40 @@ jobs:
         terraform init -backend-config="configuration/backend.dev.conf"
         terraform destroy -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD_DEV }}" -auto-approve
 
-  destroy-production:
-    name: 'production'
+  destroy-uat:
+    name: 'UAT'
     runs-on: ubuntu-latest
-    environment: production
-    needs: [destroy-development]
+    environment: UAT
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+      
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform detroy
+      run: |
+        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
+        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
+        export ARM_SUBSCRIPTION_ID="166adf1d-3776-4c73-b613-fa3f4a29f0a8"
+        export ARM_TENANT_ID="806f47be-2b6d-4478-9283-7f354e840d82"
+
+        terraform init -backend-config="configuration/backend.uat.conf"
+        terraform destroy -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD_UAT }}" -auto-approve
+
+  destroy-prd:
+    name: 'PRD'
+    runs-on: ubuntu-latest
+    environment: PRD
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
