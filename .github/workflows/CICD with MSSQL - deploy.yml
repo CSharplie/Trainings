@@ -1,12 +1,11 @@
-name: 'Terraform-Deploy'
+name: 'CICD with MSSQL - Deploy'
 
-# Push trigger
 on:
   push:
     branches:
     - main
     paths:
-    - '**/*.tf'
+    - 'CICD with MSSQL/Azure/**/*.tf'
   workflow_dispatch:
 
 jobs:
@@ -14,22 +13,14 @@ jobs:
     name: 'DEV'
     runs-on: ubuntu-latest
     environment: DEV
-
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-      
     steps:
-    # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
-
-    # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check -recursive
-
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform deployment
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
@@ -48,7 +39,6 @@ jobs:
     defaults:
       run:
         shell: bash
-      
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -69,22 +59,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: PRD
     needs: [deploy-uat]
-
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-      
     steps:
-    # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
-
-    # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check -recursive
-
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform deployment
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
