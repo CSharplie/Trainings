@@ -22,6 +22,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
     - name: Terraform deployment
+      working-directory: ./CICD with MSSQL/Azure
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
@@ -45,6 +46,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
     - name: Terraform deployment
+      working-directory: ./CICD with MSSQL/Azure
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
@@ -68,6 +70,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
     - name: Terraform deployment
+      working-directory: ./CICD with MSSQL/Azure
       run: |
         export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
