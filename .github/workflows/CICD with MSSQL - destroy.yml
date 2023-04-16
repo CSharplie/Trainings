@@ -28,7 +28,7 @@ jobs:
         export ARM_TENANT_ID="806f47be-2b6d-4478-9283-7f354e840d82"
 
         terraform init -backend-config="configuration/backend.dev.conf"
-        terraform destroy -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD_DEV }}" -auto-approve
+        terraform destroy -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -auto-approve
 
   destroy-uat:
     name: 'UAT'
@@ -51,7 +51,7 @@ jobs:
         export ARM_TENANT_ID="806f47be-2b6d-4478-9283-7f354e840d82"
 
         terraform init -backend-config="configuration/backend.uat.conf"
-        terraform destroy -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD_UAT }}" -auto-approve
+        terraform destroy -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -auto-approve
 
   destroy-prd:
     name: 'PRD'
@@ -74,4 +74,4 @@ jobs:
         export ARM_TENANT_ID="806f47be-2b6d-4478-9283-7f354e840d82"
 
         terraform init -backend-config="configuration/backend.prd.conf"
-        terraform destroy -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD_PRD }}" -auto-approve
+        terraform destroy -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -auto-approve
