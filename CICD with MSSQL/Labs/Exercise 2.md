@@ -128,11 +128,13 @@ Execute and test the pipeline to ensure the dacpac is generated
 
 1. Click on _Save and run_
 2. Enter a commit message
-3. Keep _Commit directly to the master branch_
-4. Click on save and run
-5. Wait to the end of the build
-6. When done go back
-7. Click on _1 published_ to check the generated artifact
+3. Select _Create a new branch for this commit_
+4. Enter _azure-pipelines-{trigram}
+5. Uncheck _Start a pull request_
+6. Click on save and run
+7. Wait to the end of the build
+8. When done go back
+9. Click on _1 published_ to check the generated artifact
 
 ## 7. Rename the pipeline
 
