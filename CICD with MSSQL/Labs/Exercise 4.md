@@ -13,6 +13,7 @@ This stage will contains several steps of deploy.
       - deployment:
         pool:
           vmImage: 'windows-latest'
+        environment: DEV
         strategy:
           runOnce:
             deploy:
@@ -110,6 +111,7 @@ stages:
           - group: {Trigram}_variables_DEV
         pool:
           vmImage: 'windows-latest'
+        environment: DEV
         strategy:
           runOnce:
             deploy:
