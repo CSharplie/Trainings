@@ -151,7 +151,6 @@ Allow acces to the evironement and aprove the dev deployement step
 5. Wait the end of the deployement
 
 ## 7. Check the deployment
-## 1. Check current database
 1. Connect to SQL Server With Azure Data Studio or SSMS to the server _training-cicd-analytics-dev.database.windows.net_
 2. Check the database _training-cicd-analytics-{trigram}-dev_
 3. The database must have some tables and views
