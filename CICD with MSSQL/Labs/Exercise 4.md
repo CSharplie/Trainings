@@ -12,7 +12,8 @@ In the previous created pipeline, after the _build_ stage add a new stage _Deplo
 This stage will contains several steps of deploy.
 
 ```yaml
-  - stage: 
+  - stage: DEV
+    dependsOn: Build 
     displayName: Deploy - DEV
     jobs:
       - deployment:
@@ -101,7 +102,8 @@ stages:
           inputs:
             PathToPublish: $(Build.ArtifactStagingDirectory)
             ArtifactName: Artifacts
-  - stage: 
+  - stage: DEV
+    dependsOn: Build 
     displayName: Deploy - DEV
     jobs:
       - deployment:
