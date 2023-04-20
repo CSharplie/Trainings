@@ -71,6 +71,7 @@ trigger:
   branches:
     include:
       - master
+      - develop
   paths:
     include:
       - AdventureWorks
