@@ -17,6 +17,7 @@ runs:
   steps:
     - name: Terraform detroy
       working-directory: ${{ inputs.WORKING_DIRECTORY }}
+      shell: bash
       run: |
         export ARM_CLIENT_ID="${{ inputs.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ inputs.AZURE_CLIENT_SECRET }}"
