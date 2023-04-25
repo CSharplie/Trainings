@@ -26,7 +26,6 @@ jobs:
         export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
         export ARM_SUBSCRIPTION_ID="${{ vars.AZURE_SUBSCRIPTION_ID }}"
         export ARM_TENANT_ID="${{ env.AZURE_TENANT_ID }}"
-        export TF_LOG="trace"
 
         terraform init -backend-config="configuration/backend.dev.conf"
         terraform destroy -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -auto-approve
