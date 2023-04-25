@@ -4,7 +4,7 @@ variable "environment" {
 }
 
 variable "password" {
-  default = "pzcRYVqm*s9ZYVrGuPXHZuPE"
+  default = ""
 }
 
 terraform {
