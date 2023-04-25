@@ -11,6 +11,10 @@ inputs:
     required: true
   AZURE_CLIENT_SECRET:
     required: true   
+  AZURE_SUBSCRIPTION_ID:
+    required: true
+  AZURE_TENANT_ID:
+    required: true   
 
 runs:
   using: "composite"
@@ -21,8 +25,8 @@ runs:
       run: |
         export ARM_CLIENT_ID="${{ inputs.AZURE_CLIENT_ID }}"
         export ARM_CLIENT_SECRET="${{ inputs.AZURE_CLIENT_SECRET }}"
-        export ARM_SUBSCRIPTION_ID="${{ env.AZURE_SUBSCRIPTION_ID }}"
-        export ARM_TENANT_ID="${{ env.AZURE_TENANT_ID }}"
+        export ARM_SUBSCRIPTION_ID="${{ inputs.AZURE_SUBSCRIPTION_ID }}"
+        export ARM_TENANT_ID="${{ inputs.AZURE_TENANT_ID }}"
 
         terraform init -backend-config="configuration/${{ inputs.BACKEND_CONFIG }}"
         terraform destroy ${{ inputs.VARIABLES }} -auto-approve
