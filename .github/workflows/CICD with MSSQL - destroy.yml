@@ -16,7 +16,7 @@ jobs:
         shell: bash
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Terraform destroy
       uses: "./.github/templates/terraform"
       with:
@@ -38,7 +38,7 @@ jobs:
         shell: bash
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Terraform destroy
       uses: "./.github/templates/terraform"
       with:
@@ -60,7 +60,7 @@ jobs:
         shell: bash
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Terraform destroy
       uses: "./.github/templates/terraform"
       with:
