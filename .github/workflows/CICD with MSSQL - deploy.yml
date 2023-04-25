@@ -22,18 +22,17 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Terraform Format
-      run: terraform fmt -check -recursive
     - name: Terraform deployment
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      run: |
-        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
-        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
-        export ARM_SUBSCRIPTION_ID="${{ vars.AZURE_SUBSCRIPTION_ID }}"
-        export ARM_TENANT_ID="${{ vars.AZURE_TENANT_ID }}"
-        
-        terraform init -backend-config="configuration/backend.dev.conf"
-        terraform apply -auto-approve -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+      uses: "./.github/templates/terraform"
+      with:
+        TYPE: apply
+        WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+        BACKEND_CONFIG: backend.dev.conf
+        VARIABLES: -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
   deploy-uat:
     name: 'UAT'
@@ -46,18 +45,17 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Terraform Format
-      run: terraform fmt -check -recursive
     - name: Terraform deployment
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      run: |
-        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
-        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
-        export ARM_SUBSCRIPTION_ID="${{ vars.AZURE_SUBSCRIPTION_ID }}"
-        export ARM_TENANT_ID="${{ vars.AZURE_TENANT_ID }}"
-
-        terraform init -backend-config="configuration/backend.uat.conf"
-        terraform apply -auto-approve -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+      uses: "./.github/templates/terraform"
+      with:
+        TYPE: apply
+        WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+        BACKEND_CONFIG: backend.uat.conf
+        VARIABLES: -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
   deploy-prd:
     name: 'PRD'
@@ -70,15 +68,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Terraform Format
-      run: terraform fmt -check -recursive
     - name: Terraform deployment
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      run: |
-        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
-        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
-        export ARM_SUBSCRIPTION_ID="${{ vars.AZURE_SUBSCRIPTION_ID }}"
-        export ARM_TENANT_ID="${{ vars.AZURE_TENANT_ID }}"
-
-        terraform init -backend-config="configuration/backend.prd.conf"
-        terraform apply -auto-approve -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+      uses: "./.github/templates/terraform"
+      with:
+        TYPE: apply
+        WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+        BACKEND_CONFIG: backend.prd.conf
+        VARIABLES: -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
