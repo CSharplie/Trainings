@@ -1,0 +1,23 @@
+name: terraform-apply
+
+inputs:
+  working_directory: 
+    required: true
+  backend_config:
+    required: true
+  variables:
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Terraform detroy
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
+        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
+        export ARM_SUBSCRIPTION_ID="${{ vars.AZURE_SUBSCRIPTION_ID }}"
+        export ARM_TENANT_ID="${{ env.AZURE_TENANT_ID }}"
+
+        terraform init -backend-config="configuration/${{ inputs.backend_config }}"
+        terraform destroy ${{ inputs.variables }} -auto-approve
