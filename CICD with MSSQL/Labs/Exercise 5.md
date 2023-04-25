@@ -186,7 +186,6 @@ stages:
 ### 1. Run the pipeline
 ![](Images/5.1.gif)
 
-
 1. Save the code 
 2. Run the pipeline
 3. Allow to use the evironement when asked
@@ -342,6 +341,18 @@ stages:
 3. Create and complete a pull request from _azure-pipelines-{Trigram}_ to master
 ### 2. Execute the pipeline from develop
 
+![](Images/5.2.gif)
+1. Go to _Pipelines_
+2. Find the created pipeline
+3. Click on _Run Pipeline_
+4. Select the branch _develop_
+5. Wait until the end 
 
+![](Images/5.3.gif)
+Only the _DEV_ stage must be executed. _UAT_ and _PRD_ stages must be skipped because not linked to _develop_ branch
 
 ### 3. Execute the pipeline from master
+Do same step than previous but targeting _master_ branch.
+
+![](Images/5.4.gif)
+Only the UAT & PRD stages must be executed. DEV stage must be skipped because not linked to _master_ branch
