@@ -1,6 +1,8 @@
 name: terraform-apply
 
 inputs:
+  TYPE: 
+    required: true
   WORKING_DIRECTORY: 
     required: true
   BACKEND_CONFIG:
@@ -19,7 +21,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Terraform detroy
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+    - name: "Terraform ${{ inputs.TYPE }}"
       working-directory: ${{ inputs.WORKING_DIRECTORY }}
       shell: bash
       run: |
@@ -29,4 +35,4 @@ runs:
         export ARM_TENANT_ID="${{ inputs.AZURE_TENANT_ID }}"
 
         terraform init -backend-config="configuration/${{ inputs.BACKEND_CONFIG }}"
-        terraform destroy ${{ inputs.VARIABLES }} -auto-approve
+        terraform ${{ inputs.TYPE }} ${{ inputs.VARIABLES }} -auto-approve
