@@ -7,6 +7,14 @@ variable "password" {
   default = ""
 }
 
+variable "tenant_id" {
+  default = ""
+}
+
+variable "spn_id" {
+  default = ""
+}
+
 terraform {
   backend "azurerm" {
   }
@@ -35,6 +43,8 @@ module "server_dev" {
   resource_group = azurerm_resource_group.rg
   environment    = var.environment
   password       = var.password
+  tenant_id      = var.tenant_id
+  spn_id         = var.spn_id
 }
 
 

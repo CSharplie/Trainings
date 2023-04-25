@@ -32,7 +32,7 @@ jobs:
         AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
         AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
         BACKEND_CONFIG: backend.dev.conf
-        VARIABLES: -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+        VARIABLES: -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD }} -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}"
 
   deploy-uat:
     name: 'UAT'
@@ -55,7 +55,7 @@ jobs:
         AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
         AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
         BACKEND_CONFIG: backend.uat.conf
-        VARIABLES: -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+        VARIABLES: -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}"
 
   deploy-prd:
     name: 'PRD'
@@ -78,4 +78,4 @@ jobs:
         AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
         AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
         BACKEND_CONFIG: backend.prd.conf
-        VARIABLES: -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+        VARIABLES: -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}"

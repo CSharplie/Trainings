@@ -1,6 +1,8 @@
 variable "resource_group" {}
 variable "environment" {}
 variable "password" {}
+variable "tenant_id" {}
+variable "spn_id" {}
 
 resource "azurerm_sql_server" "server" {
   name                         = "training-cicd-analytics-${var.environment}"
@@ -9,6 +11,14 @@ resource "azurerm_sql_server" "server" {
   version                      = "12.0"
   administrator_login          = "azuredevops_${var.environment}"
   administrator_login_password = var.password
+}
+
+resource "azurerm_sql_active_directory_administrator" "ad_admin" {
+  server_name         = azurerm_sql_server.server.name
+  resource_group_name = var.resource_group.name
+  login               = "sqladmin"
+  tenant_id           = var.tenant_id
+  object_id           = var.spn_id
 }
 
 resource "azurerm_sql_firewall_rule" "db_fw_az" {
