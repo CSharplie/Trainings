@@ -22,6 +22,7 @@ runs:
   using: "composite"
   steps:
     - name: Terraform Format
+      working-directory: ${{ inputs.WORKING_DIRECTORY }}
       run: terraform fmt -check -recursive
     - name: "Terraform ${{ inputs.TYPE }}"
       working-directory: ${{ inputs.WORKING_DIRECTORY }}
