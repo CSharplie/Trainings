@@ -17,8 +17,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Terraform detroy
-      uses: "./.github/templates/terraform-apply"
+    - name: Terraform destroy
+      uses: "./.github/templates/terraform"
       with:
         TYPE: destroy
         WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
@@ -39,18 +39,17 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Terraform Format
-      run: terraform fmt -check -recursive
-    - name: Terraform detroy
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      run: |
-        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
-        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
-        export ARM_SUBSCRIPTION_ID="${{ vars.AZURE_SUBSCRIPTION_ID }}"
-        export ARM_TENANT_ID="${{ env.AZURE_TENANT_ID }}"
-
-        terraform init -backend-config="configuration/backend.uat.conf"
-        terraform destroy -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -auto-approve
+    - name: Terraform destroy
+      uses: "./.github/templates/terraform"
+      with:
+        TYPE: destroy
+        WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+        BACKEND_CONFIG: backend.uat.conf
+        VARIABLES: -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
   destroy-prd:
     name: 'PRD'
@@ -62,15 +61,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Terraform Format
-      run: terraform fmt -check -recursive
-    - name: Terraform detroy
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      run: |
-        export ARM_CLIENT_ID="${{ secrets.AZURE_CLIENT_ID }}"
-        export ARM_CLIENT_SECRET="${{ secrets.AZURE_CLIENT_SECRET }}"
-        export ARM_SUBSCRIPTION_ID="${{ vars.AZURE_SUBSCRIPTION_ID }}"
-        export ARM_TENANT_ID="${{ env.AZURE_TENANT_ID }}"
-
-        terraform init -backend-config="configuration/backend.prd.conf"
-        terraform destroy -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -auto-approve
+    - name: Terraform destroy
+      uses: "./.github/templates/terraform"
+      with:
+        TYPE: destroy
+        WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+        BACKEND_CONFIG: backend.uat.conf
+        VARIABLES: -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
