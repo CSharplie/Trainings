@@ -23,12 +23,12 @@ jobs:
       uses: "./.github/templates/terraform-apply"
       with:
         WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
-        BACKEND_CONFIG: backend.dev.conf
-        VARIABLES: -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
         AZURE_SUBSCRIPTION_ID: ${{ env.AZURE_SUBSCRIPTION_ID }}
         AZURE_TENANT_ID: ${{ env.AZURE_TENANT_ID }}
+        BACKEND_CONFIG: backend.dev.conf
+        VARIABLES: -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
   destroy-uat:
     name: 'UAT'
