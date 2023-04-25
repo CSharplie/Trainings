@@ -25,7 +25,10 @@ jobs:
         working_directory: ${{ env.WORKING_DIRECTORY }}
         backend_config: configuration/backend.dev.conf
         variables: -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
-        
+      secrets:
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+
   destroy-uat:
     name: 'UAT'
     runs-on: ubuntu-latest
