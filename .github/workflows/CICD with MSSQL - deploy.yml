@@ -14,8 +14,8 @@ env:
 jobs:
   deploy-dev:
     name: 'DEV'
-    runs-on: ubuntu-latest
     environment: DEV
+    runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -35,7 +35,7 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}"
+      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
 
 #  deploy-uat:
