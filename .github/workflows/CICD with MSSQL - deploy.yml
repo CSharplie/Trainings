@@ -16,66 +16,70 @@ jobs:
     name: 'DEV'
     runs-on: ubuntu-latest
     environment: DEV
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      TF_ENVIRONMENT: backend.dev.conf
     defaults:
       run:
         shell: bash
-    steps:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    steps: Setup Terraform
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Terraform deployment
-      uses: "./.github/templates/terraform"
-      with:
-        TYPE: apply
-        WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
-        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-        BACKEND_CONFIG: backend.dev.conf
-        VARIABLES: -var="environment=dev" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}"
+    - uses: hashicorp/setup-terraform@v2
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+    - name: Terraform Init
+      run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}"
 
-  deploy-uat:
-    name: 'UAT'
-    runs-on: ubuntu-latest
-    environment: UAT
-    needs: [deploy-dev]
-    defaults:
-      run:
-        shell: bash
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Terraform deployment
-      uses: "./.github/templates/terraform"
-      with:
-        TYPE: apply
-        WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
-        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-        BACKEND_CONFIG: backend.uat.conf
-        VARIABLES: -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}"
 
-  deploy-prd:
-    name: 'PRD'
-    runs-on: ubuntu-latest
-    environment: PRD
-    needs: [deploy-uat]
-    defaults:
-      run:
-        shell: bash
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Terraform deployment
-      uses: "./.github/templates/terraform"
-      with:
-        TYPE: apply
-        WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
-        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-        BACKEND_CONFIG: backend.prd.conf
-        VARIABLES: -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}"
+#  deploy-uat:
+#    name: 'UAT'
+#    runs-on: ubuntu-latest
+#    environment: UAT
+#    needs: [deploy-dev]
+#    defaults:
+#      run:
+#        shell: bash
+#    steps:
+#    - name: Checkout
+#      uses: actions/checkout@v3
+#    - name: Terraform deployment
+#      uses: "./.github/templates/terraform"
+#      with:
+#        TYPE: apply
+#        WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
+#        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+#        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+#        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+#        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+#        BACKEND_CONFIG: backend.uat.conf
+#        VARIABLES: -var="environment=uat" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}"#
+
+#  deploy-prd:
+#    name: 'PRD'
+#    runs-on: ubuntu-latest
+#    environment: PRD
+#    needs: [deploy-uat]
+#    defaults:
+#      run:
+#        shell: bash
+#    steps:
+#    - name: Checkout
+#      uses: actions/checkout@v3
+#    - name: Terraform deployment
+#      uses: "./.github/templates/terraform"
+#      with:
+#        TYPE: apply
+#        WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
+#        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+#        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+#        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+#        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+#        BACKEND_CONFIG: backend.prd.conf
+#        VARIABLES: -var="environment=prd" -var="password=${{ secrets.AZURE_DB_PASSWORD }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}"#
