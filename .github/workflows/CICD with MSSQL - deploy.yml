@@ -39,6 +39,7 @@ jobs:
       run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_id=${{ secrets.AZURE_SPN_ID }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
   deploy-uat:
+    needs: [deploy-dev]
     name: 'UAT'
     runs-on: ubuntu-latest
     environment: UAT
@@ -65,6 +66,7 @@ jobs:
       run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_id=${{ secrets.AZURE_SPN_ID }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
   deploy-prd:
+    needs: [deploy-uat]
     name: 'PRD'
     runs-on: ubuntu-latest
     environment: PRD
