@@ -42,7 +42,7 @@ jobs:
     name: 'UAT'
     runs-on: ubuntu-latest
     environment: UAT
-    needs: [deploy-dev]
+#    needs: [deploy-dev]
     defaults:
       run:
         shell: bash
