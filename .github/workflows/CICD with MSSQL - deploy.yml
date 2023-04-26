@@ -21,7 +21,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-      TF_ENVIRONMENT: backend.dev.conf
+      TF_ENVIRONMENT: dev
     defaults:
       run:
         shell: bash
