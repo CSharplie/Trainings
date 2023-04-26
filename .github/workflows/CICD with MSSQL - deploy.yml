@@ -16,26 +16,26 @@ jobs:
     name: 'DEV'
     environment: DEV
     runs-on: ubuntu-latest
-    env:
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-      TF_ENVIRONMENT: dev
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+#    env:
+#      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+#      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+#      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+#      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+#      TF_ENVIRONMENT: dev
+#    defaults:
+#      run:
+#        shell: bash
+#        working-directory: ${{ env.WORKING_DIRECTORY }}
     steps: Setup Terraform
     - name: Checkout
       uses: actions/checkout@v3
-    - uses: hashicorp/setup-terraform@v2
-    - name: Terraform Format
-      run: terraform fmt -check -recursive
-    - name: Terraform Init
-      run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
-    - name: Terraform Apply
-      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+#    - uses: hashicorp/setup-terraform@v2
+#    - name: Terraform Format
+#      run: terraform fmt -check -recursive
+#    - name: Terraform Init
+#      run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
+#    - name: Terraform Apply
+#      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
 
 #  deploy-uat:
