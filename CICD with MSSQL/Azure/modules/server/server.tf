@@ -43,4 +43,5 @@ module "database_00" {
   environment    = var.environment
   suffix         = "CCO"
   server         = azurerm_sql_server.server
+  spn_id         = var.spn_id
 }
