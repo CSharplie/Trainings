@@ -29,6 +29,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+    - name: Terraform Init
+      run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_id=${{ vars.AZURE_SPN_ID }}" -var="tenant_id=${{ vars.AZURE_TENANT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+
 
 #  deploy-dev:
 #    name: 'DEV'
