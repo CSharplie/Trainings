@@ -19,6 +19,12 @@ jobs:
     defaults:
       run:
         shell: bash
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      TF_ENVIRONMENT: dev
     steps:
     - name: Checkout
       uses: actions/checkout@v3
