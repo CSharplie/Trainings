@@ -1,8 +1,9 @@
 variable "resource_group" {}
 variable "environment" {}
 variable "password" {}
-variable "tenant_id" {}
-variable "spn_id" {}
+variable "spn" {}
+
+data "azuread_client_config" "current" {}
 
 resource "azurerm_sql_server" "server" {
   name                         = "training-cicd-analytics-${var.environment}"
@@ -17,8 +18,8 @@ resource "azurerm_sql_active_directory_administrator" "ad_admin" {
   server_name         = azurerm_sql_server.server.name
   resource_group_name = var.resource_group.name
   login               = "sqladmin"
-  tenant_id           = var.tenant_id
-  object_id           = var.spn_id
+  tenant_id           = data.azuread_client_config.current.tenant_id
+  object_id           = var.spn
 }
 
 resource "azurerm_sql_firewall_rule" "db_fw_az" {
@@ -43,5 +44,4 @@ module "database_00" {
   environment    = var.environment
   suffix         = "CCO"
   server         = azurerm_sql_server.server
-  spn_id         = var.spn_id
 }
