@@ -12,4 +12,3 @@ resource "azurerm_sql_database" "db" {
   edition                          = "Basic"
   max_size_bytes                   = 2147483648
 }
-

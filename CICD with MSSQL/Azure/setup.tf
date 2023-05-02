@@ -7,11 +7,7 @@ variable "password" {
   default = ""
 }
 
-variable "tenant_id" {
-  default = ""
-}
-
-variable "spn_id" {
+variable "spn" {
   default = ""
 }
 
@@ -31,20 +27,48 @@ provider "azurerm" {
   features {}
 }
 
-data "azurerm_client_config" "current" {}
+data "azuread_client_config" "current" {}
 
 resource "azurerm_resource_group" "rg" {
   name     = "training_cicd_analytics_${var.environment}"
   location = "westeurope"
 }
 
-module "server_dev" {
+resource "azurerm_key_vault" "key_vault" {
+  name                          = "akv-csharplie-train-${var.environment}"
+  location                      = azurerm_resource_group.rg.location
+  resource_group_name           = azurerm_resource_group.rg.name
+  enabled_for_disk_encryption   = true
+  tenant_id                     = data.azuread_client_config.current.tenant_id
+  soft_delete_retention_days    = 7
+  purge_protection_enabled      = false
+  sku_name                      = "standard"
+
+  access_policy {
+    tenant_id = data.azuread_client_config.current.tenant_id
+    object_id = data.azuread_client_config.current.object_id
+    secret_permissions = ["get", "list", "set", "delete", "recover", "purge"]
+  }
+
+  access_policy {
+    tenant_id = data.azuread_client_config.current.tenant_id
+    object_id = var.spn
+    secret_permissions = ["get", "list", "set", "delete"]
+  }
+}
+
+resource "azurerm_key_vault_secret" "akv_sql_password" {
+  name         = "sql-password"
+  value        = var.password
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
+
+module "sql_server" {
   source         = "./modules/server"
   resource_group = azurerm_resource_group.rg
   environment    = var.environment
   password       = var.password
-  tenant_id      = var.tenant_id
-  spn_id         = var.spn_id
+  spn            = var.spn
 }
 
 
