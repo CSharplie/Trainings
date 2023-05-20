@@ -71,12 +71,6 @@ resource "azurerm_key_vault" "key_vault" {
   }
 }
 
-resource "azurerm_key_vault_secret" "akv_sql_password" {
-  name         = "sql-password"
-  value        = var.password
-  key_vault_id = azurerm_key_vault.key_vault.id
-}
-
 module "sql_server" {
   source         = "./modules/server"
   resource_group = azurerm_resource_group.rg
