@@ -31,7 +31,7 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
     - name: Terraform Destroy
-      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_azuredevops=${{ secrets.SPN_AZUREDEVOPS_OBJECT_ID }}" -var="spn_github=${{ secrets.SPN_GITHUB_OBJECT_ID}}" -var="spn_azuredevops=${{ secrets.SPN_AZUREDEVOPS_OBJECT_ID }}" -var="spn_github=${{ secrets.AZURE_ADMIN_OBJECT_ID}}" -var="password=${{ secrets.SQL_DB_PASSWORD }}"
+      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_azuredevops=${{ secrets.SPN_AZUREDEVOPS_OBJECT_ID }}" -var="spn_github=${{ secrets.SPN_GITHUB_OBJECT_ID}}" -var="admin_id=${{ secrets.AZURE_ADMIN_OBJECT_ID}}" -var="password=${{ secrets.SQL_DB_PASSWORD }}"
 
   destroy-uat:
     name: 'UAT'
@@ -57,7 +57,7 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
     - name: Terraform Destroy
-      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_azuredevops=${{ secrets.SPN_AZUREDEVOPS_OBJECT_ID }}" -var="spn_github=${{ secrets.SPN_GITHUB_OBJECT_ID}}" -var="spn_azuredevops=${{ secrets.SPN_AZUREDEVOPS_OBJECT_ID }}" -var="spn_github=${{ secrets.AZURE_ADMIN_OBJECT_ID}}" -var="password=${{ secrets.SQL_DB_PASSWORD }}"
+      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_azuredevops=${{ secrets.SPN_AZUREDEVOPS_OBJECT_ID }}" -var="spn_github=${{ secrets.SPN_GITHUB_OBJECT_ID}}" -var="admin_id=${{ secrets.AZURE_ADMIN_OBJECT_ID}}" -var="password=${{ secrets.SQL_DB_PASSWORD }}"
 
   destroy-prd:
     name: 'PRD'
@@ -83,4 +83,4 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
     - name: Terraform Destroy
-      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_azuredevops=${{ secrets.SPN_AZUREDEVOPS_OBJECT_ID }}" -var="spn_github=${{ secrets.SPN_GITHUB_OBJECT_ID}}" -var="spn_azuredevops=${{ secrets.SPN_AZUREDEVOPS_OBJECT_ID }}" -var="spn_github=${{ secrets.AZURE_ADMIN_OBJECT_ID}}" -var="password=${{ secrets.SQL_DB_PASSWORD }}"
+      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_azuredevops=${{ secrets.SPN_AZUREDEVOPS_OBJECT_ID }}" -var="spn_github=${{ secrets.SPN_GITHUB_OBJECT_ID}}" -var="admin_id=${{ secrets.AZURE_ADMIN_OBJECT_ID}}" -var="password=${{ secrets.SQL_DB_PASSWORD }}"

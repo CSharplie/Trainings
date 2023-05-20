@@ -15,7 +15,7 @@ variable "spn_github" {
   default = ""
 }
 
-variable "admin" {
+variable "admin_id" {
   default = ""
 }
 
@@ -60,7 +60,7 @@ resource "azurerm_key_vault" "key_vault" {
 
   access_policy {
     tenant_id          = data.azuread_client_config.current.tenant_id
-    object_id          = var.admin
+    object_id          = var.admin_id
     secret_permissions = ["get", "list", "set", "delete", "recover", "purge"]
   }
 
