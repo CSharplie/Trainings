@@ -31,7 +31,7 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
     - name: Terraform Destroy
-      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn=${{ secrets.AZURE_SPN_ID }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn=${{ secrets.AZURE_SPN_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
   destroy-uat:
     name: 'UAT'
@@ -57,7 +57,7 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
     - name: Terraform Destroy
-      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn=${{ secrets.AZURE_SPN_ID }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn=${{ secrets.AZURE_SPN_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
   destroy-prd:
     name: 'PRD'
@@ -83,4 +83,4 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
     - name: Terraform Destroy
-      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn=${{ secrets.AZURE_SPN_ID }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+      run: terraform destroy -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn=${{ secrets.AZURE_SPN_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
