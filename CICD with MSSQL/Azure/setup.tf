@@ -15,6 +15,10 @@ variable "spn_github" {
   default = ""
 }
 
+variable "admin" {
+  default = ""
+} 
+
 terraform {
   backend "azurerm" {
   }
@@ -51,6 +55,12 @@ resource "azurerm_key_vault" "key_vault" {
   access_policy {
     tenant_id          = data.azuread_client_config.current.tenant_id
     object_id          = var.spn_github
+    secret_permissions = ["get", "list", "set", "delete", "recover", "purge"]
+  }
+
+  access_policy {
+    tenant_id          = data.azuread_client_config.current.tenant_id
+    object_id          = var.admin
     secret_permissions = ["get", "list", "set", "delete", "recover", "purge"]
   }
 
