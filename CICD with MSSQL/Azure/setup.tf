@@ -17,7 +17,7 @@ variable "spn_github" {
 
 variable "admin" {
   default = ""
-} 
+}
 
 terraform {
   backend "azurerm" {
