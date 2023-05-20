@@ -7,7 +7,11 @@ variable "password" {
   default = ""
 }
 
-variable "spn" {
+variable "spn_azuredevops" {
+  default = ""
+}
+
+variable "spn_github" {
   default = ""
 }
 
@@ -46,13 +50,13 @@ resource "azurerm_key_vault" "key_vault" {
 
   access_policy {
     tenant_id          = data.azuread_client_config.current.tenant_id
-    object_id          = data.azuread_client_config.current.object_id
+    object_id          = var.spn_github
     secret_permissions = ["get", "list", "set", "delete", "recover", "purge"]
   }
 
   access_policy {
     tenant_id          = data.azuread_client_config.current.tenant_id
-    object_id          = var.spn
+    object_id          = var.spn_azuredevops
     secret_permissions = ["get", "list", "set", "delete"]
   }
 }
@@ -68,7 +72,7 @@ module "sql_server" {
   resource_group = azurerm_resource_group.rg
   environment    = var.environment
   password       = var.password
-  spn            = var.spn
+  spn            = var.spn_azuredevops
 }
 
 

@@ -37,7 +37,7 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn=${{ secrets.AZURE_SPN_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_azuredevops=${{ secrets.AZUREDEVOPS_SPN_ID }}" -var="spn_github=${{ secrets.AZURE_CLIENT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
   deploy-uat:
     needs: [deploy-dev]
@@ -64,7 +64,7 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn=${{ secrets.AZURE_SPN_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_azuredevops=${{ secrets.AZUREDEVOPS_SPN_ID }}" -var="spn_github=${{ secrets.AZURE_CLIENT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
 
   deploy-prd:
     needs: [deploy-uat]
@@ -91,4 +91,4 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn=${{ secrets.AZURE_SPN_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
+      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="spn_azuredevops=${{ secrets.AZUREDEVOPS_SPN_ID }}" -var="spn_github=${{ secrets.AZURE_CLIENT_ID }}" -var="password=${{ secrets.AZURE_DB_PASSWORD }}"
