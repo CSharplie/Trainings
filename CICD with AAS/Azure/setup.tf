@@ -77,3 +77,17 @@ resource "azurerm_sql_firewall_rule" "db_fw_all" {
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "255.255.255.255"
 }
+
+resource "azurerm_analysis_services_server" "aas" {
+  name                    = "training-cicd-analytics-aas-${var.environment}"
+  location                = azurerm_resource_group.rg.location
+  resource_group_name     = azurerm_resource_group.rg.name
+  sku                     = "D1"
+  admin_users             = ["training-cicd-aas@senjeb.onmicrosoft.com"]
+
+  ipv4_firewall_rule {
+    name        = "All IPs"
+    range_start = "0.0.0.0"
+    range_end   = "255.255.255.255"
+  }
+}
