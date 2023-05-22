@@ -5,6 +5,7 @@ on:
     branches:
     - main
     - session/*
+    - develop/CICD_with_MSSQL
     paths:
     - 'CICD with MSSQL/Azure/**/*.tf'
   workflow_dispatch:
