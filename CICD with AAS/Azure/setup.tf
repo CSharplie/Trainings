@@ -41,7 +41,7 @@ resource "azurerm_sql_server" "sqlserver" {
 }
 
 resource "azurerm_sql_database" "sqldb" {
-  name                             = "AdventureWorksDW2022"
+  name                             = "AdventureWorksDW2022_${var.environment}"
   resource_group_name              = azurerm_sql_server.sqlserver.resource_group_name
   location                         = azurerm_sql_server.sqlserver.location
   server_name                      = azurerm_sql_server.sqlserver.name
