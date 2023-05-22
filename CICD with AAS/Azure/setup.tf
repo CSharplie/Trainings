@@ -1,4 +1,4 @@
-variable "environment" { }
+variable "environment" {}
 
 variable "password" {}
 
