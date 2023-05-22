@@ -79,7 +79,7 @@ resource "azurerm_sql_firewall_rule" "db_fw_all" {
 }
 
 resource "azurerm_analysis_services_server" "aas" {
-  name                = "training-cicd-analytics-aas-${var.environment}"
+  name                = "trainingcicdanalyticsaas${var.environment}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku                 = "D1"
