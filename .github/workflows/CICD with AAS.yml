@@ -1,4 +1,4 @@
-name: 'CICD with MSSQL - Deploy'
+name: 'CICD with AAS - Deploy'
 
 on:
   push:
