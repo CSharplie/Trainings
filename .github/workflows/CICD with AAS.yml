@@ -1,0 +1,94 @@
+name: 'CICD with MSSQL - Deploy'
+
+on:
+  push:
+    branches:
+    - develop/CICD_with_AAS
+    - session/*
+    paths:
+    - 'CICD with AAS/Azure/**/*.tf'
+  workflow_dispatch:
+
+env:
+  WORKING_DIRECTORY: ./CICD with AAS/Azure
+
+jobs:
+  deploy-dev:
+    name: 'DEV'
+    runs-on: ubuntu-latest
+    environment: DEV
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    env:
+      ARM_CLIENT_ID: ${{ secrets.SPN_GITHUB_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.SPN_GITHUB_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      TF_ENVIRONMENT: dev
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+    - name: Terraform Init
+      run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf "
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="password=${{ secrets.SQL_DB_PASSWORD }}" -var="access_key=${{ secrets.BLOB_ACCESS_KEY }}" -var="blob=${{ secrets.BLOB_NAME }}"
+
+  deploy-uat:
+    needs: [deploy-dev]
+    name: 'UAT'
+    runs-on: ubuntu-latest
+    environment: UAT
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    env:
+      ARM_CLIENT_ID: ${{ secrets.SPN_GITHUB_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.SPN_GITHUB_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      TF_ENVIRONMENT: uat
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+    - name: Terraform Init
+      run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="password=${{ secrets.SQL_DB_PASSWORD }}" -var="access_key=${{ secrets.BLOB_ACCESS_KEY }}" -var="blob=${{ secrets.BLOB_NAME }}"
+
+  deploy-prd:
+    needs: [deploy-uat]
+    name: 'PRD'
+    runs-on: ubuntu-latest
+    environment: PRD
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    env:
+      ARM_CLIENT_ID: ${{ secrets.SPN_GITHUB_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.SPN_GITHUB_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      TF_ENVIRONMENT: prd
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+    - name: Terraform Init
+      run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf"
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="password=${{ secrets.SQL_DB_PASSWORD }}" -var="access_key=${{ secrets.BLOB_ACCESS_KEY }}" -var="blob=${{ secrets.BLOB_NAME }}"
