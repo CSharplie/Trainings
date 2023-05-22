@@ -84,10 +84,4 @@ resource "azurerm_analysis_services_server" "aas" {
   resource_group_name = azurerm_resource_group.rg.name
   sku                 = "D1"
   admin_users         = ["training-cicd-aas@senjeb.onmicrosoft.com"]
-
-  ipv4_firewall_rule {
-    name        = "All IPs"
-    range_start = "0.0.0.0"
-    range_end   = "255.255.255.255"
-  }
 }
