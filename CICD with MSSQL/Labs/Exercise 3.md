@@ -12,8 +12,8 @@ Create a new variable group liked with DEV values
 5. Add 4 values 
     | Name      | Value                                              |
     | ----------|---------------------------------------------------:|
-    | Database  | training-cicd-analytics-{trigram}-dev              | 
-    | HostName  | training-cicd-analytics-dev.database.windows.net   |
+    | Database  | training-cicd-analytics-mssql-{trigram}-dev              | 
+    | HostName  | training-cicd-analytics-mssql-dev.database.windows.net   |
     | Password  | {Provided by the instructor}                       |           
     | UserName  | azuredevops_dev                                    | 
 6. For _Password_ click on the padlock to set as secret. (In a real case use a Azure Key Vault if possible)
@@ -25,8 +25,8 @@ Create a new variable group liked with UAT values.
 2. Replaces values by 
     | Name      | Value                                              |
     | ----------|---------------------------------------------------:|
-    | Database  | training-cicd-analytics-{trigram}-uat              | 
-    | HostName  | training-cicd-analytics-uat.database.windows.net   |
+    | Database  | training-cicd-analytics-mssql-{trigram}-uat              | 
+    | HostName  | training-cicd-analytics-mssql-uat.database.windows.net   |
     | Password  | {Provided by the instructor}                       |           
     | UserName  | azuredevops_uat                                    | 
 
@@ -36,7 +36,7 @@ Create a new variable group liked with PRD values.
 2. Replaces values by 
     | Name      | Value                                              |
     | ----------|---------------------------------------------------:|
-    | Database  | training-cicd-analytics-{trigram}-prd              | 
-    | HostName  | training-cicd-analytics-prd.database.windows.net   |
+    | Database  | training-cicd-analytics-mssql-{trigram}-prd              | 
+    | HostName  | training-cicd-analytics-mssql-prd.database.windows.net   |
     | Password  | {Provided by the instructor}                       |           
     | UserName  | azuredevops_prd                                    | 

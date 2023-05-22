@@ -6,7 +6,7 @@ variable "spn" {}
 data "azuread_client_config" "current" {}
 
 resource "azurerm_sql_server" "server" {
-  name                         = "training-cicd-analytics-${var.environment}"
+  name                         = "training-cicd-analytics-mssql-${var.environment}"
   resource_group_name          = var.resource_group.name
   location                     = var.resource_group.location
   version                      = "12.0"
