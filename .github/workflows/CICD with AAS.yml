@@ -35,7 +35,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
     - name: Terraform Init
-      run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf "
+      run: terraform init -backend-config="configuration/backend.${{ env.TF_ENVIRONMENT }}.conf
     - name: Terraform Apply
       run: terraform apply -auto-approve -var="environment=${{ env.TF_ENVIRONMENT }}" -var="password=${{ secrets.SQL_DB_PASSWORD }}" -var="access_key=${{ secrets.BLOB_ACCESS_KEY }}" -var="blob=${{ secrets.BLOB_NAME }}"
 
