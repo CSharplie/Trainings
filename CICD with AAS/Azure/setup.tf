@@ -1,6 +1,4 @@
-variable "environment" {
-  default = "dev"
-}
+variable "environment" { }
 
 variable "password" {}
 
