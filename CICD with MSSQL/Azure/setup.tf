@@ -43,7 +43,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_key_vault" "key_vault" {
-  name                        = "akv-csharplie-train-${var.environment}"
+  name                        = "akv-training-mssql-${var.environment}"
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
   enabled_for_disk_encryption = true
