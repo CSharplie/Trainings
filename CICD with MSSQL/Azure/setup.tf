@@ -38,12 +38,12 @@ provider "azurerm" {
 data "azuread_client_config" "current" {}
 
 resource "azurerm_resource_group" "rg" {
-  name     = "training_cicd_analytics_${var.environment}"
+  name     = "training_cicd_analytics_mssql_${var.environment}"
   location = "westeurope"
 }
 
 resource "azurerm_key_vault" "key_vault" {
-  name                        = "akv-csharplie-train-${var.environment}"
+  name                        = "akv-training-mssql-${var.environment}"
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
   enabled_for_disk_encryption = true

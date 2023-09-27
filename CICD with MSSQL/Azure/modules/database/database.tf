@@ -4,7 +4,7 @@ variable "suffix" {}
 variable "server" {}
 
 resource "azurerm_sql_database" "db" {
-  name                             = "training-cicd-analytics-${var.suffix}-${var.environment}"
+  name                             = "training-cicd-analytics-mssql-${var.suffix}-${var.environment}"
   resource_group_name              = var.resource_group.name
   location                         = var.resource_group.location
   server_name                      = var.server.name

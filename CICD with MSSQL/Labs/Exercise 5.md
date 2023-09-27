@@ -191,13 +191,13 @@ stages:
 3. Allow to use the evironement when asked
 
 ### 2. Check the deployment in UAT
-1. Connect to SQL Server With Azure Data Studio or SSMS to the server _training-cicd-analytics-uat.database.windows.net_
-2. Check the database _training-cicd-analytics-{trigram}-uat_
+1. Connect to SQL Server With Azure Data Studio or SSMS to the server _training-cicd-analytics-mssql-uat.database.windows.net_
+2. Check the database _training-cicd-analytics-mssql-{trigram}-uat_
 3. The database must have some tables and views
 
 ### 2. Check the deployment in PRD
-1. Connect to SQL Server With Azure Data Studio or SSMS to the server _training-cicd-analytics-prd.database.windows.net_
-2. Check the database _training-cicd-analytics-{trigram}-prd_
+1. Connect to SQL Server With Azure Data Studio or SSMS to the server _training-cicd-analytics-mssql-prd.database.windows.net_
+2. Check the database _training-cicd-analytics-mssql-{trigram}-prd_
 3. The database must have some tables and views
 
 ## 5. Add branch filter
